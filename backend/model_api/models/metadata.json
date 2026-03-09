@@ -1,0 +1,7 @@
+{
+  "model_name": "baseline_model_revised_xgboost",
+  "model_version": "baseline_xgboost_v1",
+  "status": "xgboost_default",
+  "artifact": "models/xgboost_model.json",
+  "next_step": "export trained xgboost model to xgboost_model.json to enable real inference"
+}
