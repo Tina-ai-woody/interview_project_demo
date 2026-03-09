@@ -1,0 +1,43 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.python-version
+.venv/
+venv/
+.env
+.env.*
+*.log
+.pytest_cache/
+.mypy_cache/
+
+# Node / Nuxt
+frontend/node_modules/
+frontend/.nuxt/
+frontend/.output/
+frontend/.nitro/
+frontend/.cache/
+frontend/.env
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Model / data artifacts (adjust if you want tracked)
+*.pkl
+*.joblib
+*.onnx
+backend/model_api/models/*.bin
+backend/model_api/models/*.ubj
+backend/model_api/models/*.bst
+
+# Jupyter
+.ipynb_checkpoints/
