@@ -33,9 +33,9 @@
         <div>
           <h3 class="font-semibold text-sm mb-4">Stay Connected</h3>
           <div class="flex items-center gap-4">
-            <UButton icon="i-simple-icons-github" color="gray" variant="ghost" />
-            <UButton icon="i-simple-icons-x" color="gray" variant="ghost" />
-            <UButton icon="i-simple-icons-linkedin" color="gray" variant="ghost" />
+            <UButton icon="i-simple-icons-github" color="neutral" variant="ghost" />
+            <UButton icon="i-simple-icons-x" color="neutral" variant="ghost" />
+            <UButton icon="i-simple-icons-linkedin" color="neutral" variant="ghost" />
           </div>
         </div>
       </div>

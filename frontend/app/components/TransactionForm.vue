@@ -50,54 +50,47 @@ function onSubmit() {
 
     <form @submit.prevent="onSubmit">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <UFormGroup label="Step" name="step" help="The step representing the time.">
+        <UFormField label="Step" name="step" help="The step representing the time.">
           <UInput v-model.number="form.step" type="number" min="1" icon="i-heroicons-clock" />
-        </UFormGroup>
+        </UFormField>
 
-        <UFormGroup label="Transaction Type" name="type">
+        <UFormField label="Transaction Type" name="type">
           <USelect
             v-model="form.type"
-            :options="['CASH_IN', 'CASH_OUT', 'DEBIT', 'PAYMENT', 'TRANSFER']"
+            :items="['CASH_IN', 'CASH_OUT', 'DEBIT', 'PAYMENT', 'TRANSFER']"
           />
-        </UFormGroup>
+        </UFormField>
 
-        <UFormGroup label="Amount" name="amount">
+        <UFormField label="Amount" name="amount">
           <UInput v-model.number="form.amount" type="number" min="0" step="0.01" icon="i-heroicons-currency-dollar" />
-        </UFormGroup>
+        </UFormField>
 
-        <UFormGroup label="Old Balance Origin" name="oldbalanceOrg">
+        <UFormField label="Old Balance Origin" name="oldbalanceOrg">
           <UInput v-model.number="form.oldbalanceOrg" type="number" step="0.01" />
-        </UFormGroup>
+        </UFormField>
 
-        <UFormGroup label="New Balance Origin" name="newbalanceOrig">
+        <UFormField label="New Balance Origin" name="newbalanceOrig">
           <UInput v-model.number="form.newbalanceOrig" type="number" step="0.01" />
-        </UFormGroup>
+        </UFormField>
 
-        <UFormGroup label="Old Balance Destination" name="oldbalanceDest">
+        <UFormField label="Old Balance Destination" name="oldbalanceDest">
           <UInput v-model.number="form.oldbalanceDest" type="number" step="0.01" />
-        </UFormGroup>
+        </UFormField>
 
-        <UFormGroup label="New Balance Destination" name="newbalanceDest">
+        <UFormField label="New Balance Destination" name="newbalanceDest">
           <UInput v-model.number="form.newbalanceDest" type="number" step="0.01" />
-        </UFormGroup>
+        </UFormField>
 
-        <UFormGroup label="Flagged Fraud" name="isFlaggedFraud">
-          <USelect
-            v-model.number="form.isFlaggedFraud"
-            :options="[{ label: '0', value: 0 }, { label: '1', value: 1 }]"
-          />
-        </UFormGroup>
-
-        <UFormGroup label="Prediction Model" name="modelName" class="md:col-span-2">
+        <UFormField label="Prediction Model" name="modelName" class="md:col-span-2">
           <USelect
             v-model="modelName"
-            :options="[
+            :items="[
               { label: 'XGBoost (Recommended)', value: 'xgboost' },
               { label: 'Decision Tree', value: 'decision_tree' },
               { label: 'Logistic Regression', value: 'logistic_regression' }
             ]"
           />
-        </UFormGroup>
+        </UFormField>
       </div>
 
       <div class="mt-8 flex justify-end">

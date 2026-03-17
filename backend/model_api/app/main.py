@@ -1,6 +1,7 @@
 import os
 
-from fastapi import FastAPI
+from typing import Annotated
+from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
 
 from .schemas import (
@@ -38,7 +39,7 @@ app.add_middleware(
 
 
 @app.get('/health')
-def health():
+def health() -> dict:
     return {
         'status': 'ok',
         'service': 'model-api',
@@ -52,8 +53,8 @@ def health():
     }
 
 
-@app.post('/v1/model/predict', response_model=PredictResponse)
-def predict(payload: PredictRequest):
+@app.post('/v1/model/predict')
+def predict(payload: Annotated[PredictRequest, Body()]) -> PredictResponse:
     prob, used_model = score(payload.model_dump(), model_name=payload.model_name)
     return PredictResponse(
         fraud_prob=prob,
@@ -64,8 +65,8 @@ def predict(payload: PredictRequest):
     )
 
 
-@app.post('/v1/model/predict-batch', response_model=BatchPredictResponse)
-def predict_batch(payload: BatchPredictRequest):
+@app.post('/v1/model/predict-batch')
+def predict_batch(payload: Annotated[BatchPredictRequest, Body()]) -> BatchPredictResponse:
     items = []
     for row in payload.items:
         prob, used_model = score(row.model_dump(), model_name=row.model_name)

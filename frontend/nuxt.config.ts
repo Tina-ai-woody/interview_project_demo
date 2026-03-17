@@ -2,6 +2,7 @@
 import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
+  compatibilityDate: '2026-03-17',
   future: { compatibilityVersion: 4 },
   modules: ['@nuxt/ui'],
   devtools: { enabled: true },
