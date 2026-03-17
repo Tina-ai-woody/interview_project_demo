@@ -9,7 +9,13 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --frozen --no-install-project --no-dev
 
+# Copy the application code
 ADD . /app
+
+# Ensure models directory exists or is copied (if present in context)
+# For Zeabur sub-directory deployments, you might need to copy the 'models' 
+# folder into 'backend/model_api' so Docker can see it.
+RUN mkdir -p /app/models
 
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
