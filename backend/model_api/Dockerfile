@@ -29,6 +29,6 @@ COPY --from=builder /app /app
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-EXPOSE 8081
+EXPOSE 8080
 
-CMD ["fastapi", "run", "app/main.py", "--port", "8081", "--host", "0.0.0.0"]
+CMD ["fastapi", "run", "app/main.py", "--port", "8080", "--host", "0.0.0.0"]
