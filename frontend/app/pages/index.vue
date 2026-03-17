@@ -65,9 +65,9 @@ async function runPrediction(payload: PredictionInput) {
   </main>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 .container { max-width: 860px; margin: 24px auto; padding: 0 16px; display: grid; gap: 16px; }
 .muted { color: #6b7280; }
 .error { color: #dc2626; }
 h1 { margin: 0; }
-</style>
+</style> -->

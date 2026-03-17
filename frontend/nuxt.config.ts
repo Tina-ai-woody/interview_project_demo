@@ -3,6 +3,7 @@ import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
+  modules: ['@nuxt/ui'],
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
@@ -10,5 +11,5 @@ export default defineNuxtConfig({
       modelApiBase: process.env.NUXT_PUBLIC_MODEL_API_BASE || 'http://localhost:8002'
     }
   },
-  css: []
+  css: ['~/assets/css/main.css']
 })

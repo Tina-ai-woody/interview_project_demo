@@ -5,9 +5,9 @@ TxnType = Literal['CASH_IN', 'CASH_OUT', 'DEBIT', 'PAYMENT', 'TRANSFER']
 
 
 class TransactionInput(BaseModel):
-    step: int = Field(..., ge=1)
+    step: int = Field(ge=1)
     type: TxnType
-    amount: float = Field(..., ge=0)
+    amount: float = Field(ge=0)
     oldbalanceOrg: float
     newbalanceOrig: float
     oldbalanceDest: float

@@ -8,6 +8,13 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
-    "nuxt": "^4.0.0"
+    "@nuxt/icon": "latest",
+    "@nuxt/ui": "latest",
+    "nuxt": "^4.0.0",
+    "tailwindcss": "^4.2.1"
+  },
+  "devDependencies": {
+    "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/simple-icons": "^1.2.74"
   }
 }

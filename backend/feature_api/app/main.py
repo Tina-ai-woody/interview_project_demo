@@ -1,6 +1,7 @@
 import os
 
-from fastapi import FastAPI
+from typing import Annotated
+from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
 
 from .schemas import (
@@ -29,15 +30,15 @@ app.add_middleware(
 
 
 @app.get('/health')
-def health():
+def health() -> dict[str, str]:
     return {'status': 'ok', 'service': 'feature-api'}
 
 
-@app.post('/v1/features/transform', response_model=FeatureOutput)
-def transform(payload: TransactionInput):
+@app.post('/v1/features/transform')
+def transform(payload: Annotated[TransactionInput, Body()]) -> FeatureOutput:
     return transform_single(payload)
 
 
-@app.post('/v1/features/transform-batch', response_model=BatchFeatureOutput)
-def transform_batch(payload: BatchTransactionInput):
+@app.post('/v1/features/transform-batch')
+def transform_batch(payload: Annotated[BatchTransactionInput, Body()]) -> BatchFeatureOutput:
     return BatchFeatureOutput(items=[transform_single(x) for x in payload.items])
