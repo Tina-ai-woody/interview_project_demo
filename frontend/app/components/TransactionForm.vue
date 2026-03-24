@@ -40,55 +40,73 @@ function onSubmit() {
 </script>
 
 <template>
-  <form class="card" @submit.prevent="onSubmit">
-    <h2>Transaction Input</h2>
+  <UCard>
+    <template #header>
+      <div class="flex items-center gap-2">
+        <UIcon name="i-heroicons-document-text" class="w-5 h-5 text-primary" />
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Transaction Details</h2>
+      </div>
+    </template>
 
-    <div class="grid">
-      <label>Step<input v-model.number="form.step" type="number" min="1" required /></label>
+    <form @submit.prevent="onSubmit">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <UFormField label="Step" name="step" help="The step representing the time.">
+          <UInput v-model.number="form.step" type="number" min="1" icon="i-heroicons-clock" />
+        </UFormField>
 
-      <label>
-        Type
-        <select v-model="form.type" required>
-          <option>CASH_IN</option>
-          <option>CASH_OUT</option>
-          <option>DEBIT</option>
-          <option>PAYMENT</option>
-          <option>TRANSFER</option>
-        </select>
-      </label>
+        <UFormField label="Transaction Type" name="type">
+          <USelect
+            v-model="form.type"
+            :items="['CASH_IN', 'CASH_OUT', 'DEBIT', 'PAYMENT', 'TRANSFER']"
+          />
+        </UFormField>
 
-      <label>Amount<input v-model.number="form.amount" type="number" min="0" step="0.01" required /></label>
-      <label>oldbalanceOrg<input v-model.number="form.oldbalanceOrg" type="number" step="0.01" required /></label>
-      <label>newbalanceOrig<input v-model.number="form.newbalanceOrig" type="number" step="0.01" required /></label>
-      <label>oldbalanceDest<input v-model.number="form.oldbalanceDest" type="number" step="0.01" required /></label>
-      <label>newbalanceDest<input v-model.number="form.newbalanceDest" type="number" step="0.01" required /></label>
+        <UFormField label="Amount" name="amount">
+          <UInput v-model.number="form.amount" type="number" min="0" step="0.01" icon="i-heroicons-currency-dollar" />
+        </UFormField>
 
-      <label>
-        isFlaggedFraud
-        <select v-model.number="form.isFlaggedFraud">
-          <option :value="0">0</option>
-          <option :value="1">1</option>
-        </select>
-      </label>
+        <UFormField label="Old Balance Origin" name="oldbalanceOrg">
+          <UInput v-model.number="form.oldbalanceOrg" type="number" step="0.01" />
+        </UFormField>
 
-      <label>
-        Model
-        <select v-model="modelName">
-          <option value="xgboost">xgboost</option>
-          <option value="decision_tree">decision_tree</option>
-          <option value="logistic_regression">logistic_regression</option>
-        </select>
-      </label>
-    </div>
+        <UFormField label="New Balance Origin" name="newbalanceOrig">
+          <UInput v-model.number="form.newbalanceOrig" type="number" step="0.01" />
+        </UFormField>
 
-    <button type="submit">Predict Risk</button>
-  </form>
+        <UFormField label="Old Balance Destination" name="oldbalanceDest">
+          <UInput v-model.number="form.oldbalanceDest" type="number" step="0.01" />
+        </UFormField>
+
+        <UFormField label="New Balance Destination" name="newbalanceDest">
+          <UInput v-model.number="form.newbalanceDest" type="number" step="0.01" />
+        </UFormField>
+
+        <UFormField label="Prediction Model" name="modelName" class="md:col-span-2">
+          <USelect
+            v-model="modelName"
+            :items="[
+              { label: 'XGBoost (Recommended)', value: 'xgboost' },
+              { label: 'Decision Tree', value: 'decision_tree' },
+              { label: 'Logistic Regression', value: 'logistic_regression' }
+            ]"
+          />
+        </UFormField>
+      </div>
+
+      <div class="mt-8 flex justify-end">
+        <UButton
+          type="submit"
+          icon="i-heroicons-magnifying-glass"
+          label="Analyze Risk"
+          size="lg"
+          block
+          class="sm:w-auto"
+        />
+      </div>
+    </form>
+  </UCard>
 </template>
 
 <style scoped>
-.card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 16px; }
-.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
-input, select { padding: 8px; border: 1px solid #ccc; border-radius: 8px; }
-button { margin-top: 12px; padding: 10px 14px; border-radius: 8px; border: none; background: #111827; color: white; cursor: pointer; }
+/* Scoped styles removed in favor of Tailwind classes and Nuxt UI defaults */
 </style>

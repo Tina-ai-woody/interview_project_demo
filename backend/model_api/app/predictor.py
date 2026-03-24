@@ -4,7 +4,9 @@ import json
 import os
 import warnings
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Optional, TYPE_CHECKING
+if TYPE_CHECKING:
+    from .schemas import RiskLevel
 
 
 MODEL_VERSION = os.getenv('MODEL_VERSION', 'baseline_multi_model_v1')
@@ -13,12 +15,30 @@ T_HIGH = float(os.getenv('T_HIGH', '0.30'))
 
 MODEL_API_DIR = Path(__file__).resolve().parents[1]
 METADATA_PATH = MODEL_API_DIR / 'models' / 'metadata.json'
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
+
+# Robust path handling for Docker and Local
+MODELS_DIR_ENV = os.getenv('MODELS_DIR')
+if MODELS_DIR_ENV:
+    MODELS_DIR = Path(MODELS_DIR_ENV)
+else:
+    # Fallback: try to find models directory relative to this file
+    # Locally: project_root/backend/model_api/app/predictor.py -> project_root/models
+    # In Docker: /app/app/predictor.py -> /app/models
+    try:
+        # Try local dev structure first (3 levels up)
+        PROJECT_ROOT = Path(__file__).resolve().parents[3]
+        MODELS_DIR = PROJECT_ROOT / 'models'
+        if not MODELS_DIR.exists():
+            # Try Docker structure (2 levels up)
+            MODELS_DIR = Path(__file__).resolve().parents[2] / 'models'
+    except (IndexError, ValueError):
+        # Ultimate fallback
+        MODELS_DIR = Path('/app/models')
 
 MODEL_FILES = {
-    'xgboost': PROJECT_ROOT / 'models' / 'xgboost_pipeline.joblib',
-    'decision_tree': PROJECT_ROOT / 'models' / 'decision_tree_pipeline.joblib',
-    'logistic_regression': PROJECT_ROOT / 'models' / 'logistic_regression_pipeline.joblib',
+    'xgboost': MODELS_DIR / 'xgboost_pipeline.joblib',
+    'decision_tree': MODELS_DIR / 'decision_tree_pipeline.joblib',
+    'logistic_regression': MODELS_DIR / 'logistic_regression_pipeline.joblib',
 }
 
 
@@ -124,7 +144,7 @@ def score(features: Dict, model_name: Optional[str] = None) -> tuple[float, str]
     return SCORER.score(features, model_name=model_name)
 
 
-def risk_level(prob: float) -> str:
+def risk_level(prob: float) -> RiskLevel:
     if prob >= T_HIGH:
         return 'HIGH'
     if prob >= T_MID:
